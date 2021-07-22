@@ -95,7 +95,7 @@ void pumas_elastic_path_v(int order, double Z, double A, double mass,
         size_t i;
         for (i = 0, energy = energies, value = values; i < n;
             i++, energy++, value++) {
-                *value = pumas_elastic_length(
+                *value = pumas_elastic_path(
                     order, Z, A, mass, *energy);
         }
 }
@@ -121,9 +121,9 @@ enum pumas_return pumas_physics_property_elastic_cutoff_angle_v(
 }
 
 
-/* Vectorization of the energy loss computation */
-enum pumas_return pumas_physics_property_energy_loss_v(
-    const struct pumas_physics * physics, enum pumas_mode scheme,
+/* Vectorization of the elastic mean free path computation */
+enum pumas_return pumas_physics_property_elastic_path_v(
+    const struct pumas_physics * physics,
     int material, size_t n, double * energies, double * values)
 {
         enum pumas_return rc = PUMAS_RETURN_SUCCESS;
@@ -131,8 +131,8 @@ enum pumas_return pumas_physics_property_energy_loss_v(
         size_t i;
         for (i = 0, energy = energies, value = values; i < n;
             i++, energy++, value++) {
-                rc = pumas_physics_property_energy_loss(physics,
-                    scheme, material, *energy, value);
+                rc = pumas_physics_property_elastic_path(physics,
+                    material, *energy, value);
                 if (rc != PUMAS_RETURN_SUCCESS)
                         break;
         }
@@ -161,8 +161,28 @@ enum pumas_return pumas_physics_property_energy_straggling_v(
 }
 
 
+/* Vectorization of the kinetic energy computation */
+enum pumas_return pumas_physics_property_kinetic_energy_v(
+    const struct pumas_physics * physics, enum pumas_mode scheme,
+    int material, size_t n, double * ranges, double * values)
+{
+        enum pumas_return rc = PUMAS_RETURN_SUCCESS;
+        double * range, * value;
+        size_t i;
+        for (i = 0, range = ranges, value = values; i < n;
+            i++, range++, value++) {
+                rc = pumas_physics_property_kinetic_energy(physics,
+                    scheme, material, *range, value);
+                if (rc != PUMAS_RETURN_SUCCESS)
+                        break;
+        }
+
+        return rc;
+}
+
+
 /* Vectorization of the grammage range computation */
-enum pumas_return pumas_physics_property_grammage_v(
+enum pumas_return pumas_physics_property_range_v(
     const struct pumas_physics * physics, enum pumas_mode scheme,
     int material, size_t n, double * energies, double * values)
 {
@@ -171,7 +191,7 @@ enum pumas_return pumas_physics_property_grammage_v(
         size_t i;
         for (i = 0, energy = energies, value = values; i < n;
             i++, energy++, value++) {
-                rc = pumas_physics_property_grammage(physics,
+                rc = pumas_physics_property_range(physics,
                     scheme, material, *energy, value);
                 if (rc != PUMAS_RETURN_SUCCESS)
                         break;
@@ -180,8 +200,9 @@ enum pumas_return pumas_physics_property_grammage_v(
         return rc;
 }
 
-/* Vectorization of the multiple scattering length computation */
-enum pumas_return pumas_physics_property_multiple_scattering_length_v(
+
+/* Vectorization of the stopping power computation */
+enum pumas_return pumas_physics_property_stopping_power_v(
     const struct pumas_physics * physics, enum pumas_mode scheme,
     int material, size_t n, double * energies, double * values)
 {
@@ -190,7 +211,27 @@ enum pumas_return pumas_physics_property_multiple_scattering_length_v(
         size_t i;
         for (i = 0, energy = energies, value = values; i < n;
             i++, energy++, value++) {
-                rc = pumas_physics_property_multiple_scattering_length(physics,
+                rc = pumas_physics_property_stopping_power(physics,
+                    scheme, material, *energy, value);
+                if (rc != PUMAS_RETURN_SUCCESS)
+                        break;
+        }
+
+        return rc;
+}
+
+
+/* Vectorization of the transport mean free path computation */
+enum pumas_return pumas_physics_property_transport_path_v(
+    const struct pumas_physics * physics, enum pumas_mode scheme,
+    int material, size_t n, double * energies, double * values)
+{
+        enum pumas_return rc = PUMAS_RETURN_SUCCESS;
+        double * energy, * value;
+        size_t i;
+        for (i = 0, energy = energies, value = values; i < n;
+            i++, energy++, value++) {
+                rc = pumas_physics_property_transport_path(physics,
                     scheme, material, *energy, value);
                 if (rc != PUMAS_RETURN_SUCCESS)
                         break;

@@ -13,7 +13,7 @@ def simulate(n_events, energy_loss, direction):
     mode = {
         'energy_loss' : energy_loss,
         'direction' : direction,
-        'scattering' : 'longitudinal'
+        'scattering' : 'disabled'
     }
 
     # Create the simulation
@@ -74,10 +74,10 @@ def simulate(n_events, energy_loss, direction):
 if __name__ == '__main__':
     n_events = 100000
     configs = (
-        ('detailed', 'forward', 'k-'),
-        ('detailed', 'backward', 'r-'),
-        ('hybrid', 'forward', 'k--'),
-        ('hybrid', 'backward', 'r--'),
+        ('straggled', 'forward', 'k-'),
+        ('straggled', 'backward', 'r-'),
+        ('mixed', 'forward', 'k--'),
+        ('mixed', 'backward', 'r--'),
         ('csda', 'forward', 'k:'),
         ('csda', 'backward', 'r:')
     )
@@ -99,7 +99,7 @@ if __name__ == '__main__':
 
     with open('low-energy.txt', 'w+') as f:
         f.write('''#
-#   E      Forward-Detailed      Backward-detailed     Forward-Hybrid        Backward-Hybrid       Forward-CSDA          Backward-CSDA
+#   E     Forward-straggled     Backward-straggled      Forward-mixed        Backward-mixed         Forward-CSDA          Backward-CSDA
 #           Mean      Std         Mean      Std         Mean      Std         Mean    Std           Mean      Std         Mean      Std
 # (GeV)       (GeV^{-1})            (GeV^{-1})            (GeV^{-1})            (GeV^{-1})            (GeV^{-1})            (GeV^{-1})
 #

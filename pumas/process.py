@@ -130,6 +130,14 @@ class RadiativeProcess:
         return cls._dcs(Z, A, mass, energy, q)
 
     @classmethod
+    def range(cls, Z, mass, energy):
+        '''Get the DCS kinematic range
+        '''
+        r = ffi.new('double[2]')
+        lib.pumas_dcs_range(cls.process, Z, mass, energy, r, r + 1)
+        return (float(r[0]), float(r[1]))
+
+    @classmethod
     def _wrap_dcs(cls):
         try:
             model_b = cls.model.encode()

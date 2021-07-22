@@ -2,8 +2,9 @@ from .libpumas import ffi, lib
 
 import sys
 
-__all__ = ('AVOGADRO_NUMBER', 'ELECTRON_MASS', 'MUON_C_TAU', 'MUON_MASS',
-    'NEUTRON_MASS', 'PROTON_MASS', 'TAU_C_TAU', 'TAU_MASS')
+__all__ = ('ALPHA_EM', 'AVOGADRO_NUMBER', 'BOHR_RADIUS', 'ELECTRON_MASS',
+           'ELECTRON_RADIUS', 'HBAR_C', 'MUON_C_TAU', 'MUON_MASS',
+           'NEUTRON_MASS', 'PION_MASS', 'PROTON_MASS', 'TAU_C_TAU', 'TAU_MASS')
 
 
 def __getattr__(name):

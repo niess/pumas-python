@@ -21,13 +21,13 @@ plot.ylabel('stopping power, $S$ (GeV m$^2$ / kg)')
 plot.legend(loc=2)
 
 plot.figure()
-plot.plot(rock.data.kinetic_energy, rock.data.multiple_scattering_length, 'k.',
+plot.plot(rock.data.kinetic_energy, rock.data.transport_path, 'k.',
     label='tabulation')
-plot.plot(e, rock.multiple_scattering_length(e), 'r-', label='interpolation')
+plot.plot(e, rock.transport_path(e), 'r-', label='interpolation')
 plot.xscale('log')
 plot.yscale('log')
 plot.xlabel('kinetic energy (GeV)')
-plot.ylabel('First transport path length (m$^2$ / kg)')
+plot.ylabel('transport mean free path, $\\lambda_1$, (m$^2$ / kg)')
 plot.legend(loc=2)
 
 plot.show()

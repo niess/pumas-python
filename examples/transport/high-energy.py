@@ -6,9 +6,9 @@ n_events = 100000
 energy_min, energy_max = 1E-02, 1E+06
 distance = 1E+03
 mode = {
-    'energy_loss' : 'detailed',
+    'energy_loss' : 'straggled',
     'direction' : 'backward',
-    'scattering' : 'fullspace'
+    'scattering' : 'disabled'
 }
 
 # Create the simulation

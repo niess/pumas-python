@@ -32,8 +32,8 @@ class Context:
 
         # Set the mappings
         if self._ENERGY_LOSS_STR is None:
-            d_idx = {'virtual': None, 'csda': None, 'hybrid': None,
-                'detailed': None}
+            d_idx = {'disabled': None, 'csda': None, 'mixed': None,
+                'straggled': None}
             d_str = {}
             for k in d_idx.keys():
                 i = getattr(lib, f'PUMAS_MODE_{k.upper()}')
@@ -60,21 +60,21 @@ class Context:
 
     @property
     def decay(self):
-        if self._c.mode.decay == lib.PUMAS_MODE_STABLE:
-            return 'stable'
-        elif self._c.mode.decay == lib.PUMAS_MODE_WEIGHT:
-            return 'weight'
+        if self._c.mode.decay == lib.PUMAS_MODE_DISABLED:
+            return 'disabled'
+        elif self._c.mode.decay == lib.PUMAS_MODE_WEIGHTED:
+            return 'weighted'
         else:
-            return 'decay'
+            return 'randomised'
 
     @decay.setter
     def decay(self, v):
-        if v == 'stable':
-            self._c.mode.decay = lib.PUMAS_MODE_STABLE
-        elif v == 'weight':
-            self._c.mode.decay = lib.PUMAS_MODE_WEIGHT
-        elif v == 'decay':
-            self._c.mode.decay = lib.PUMAS_MODE_DECAY
+        if v == 'disabled':
+            self._c.mode.decay = lib.PUMAS_MODE_DISABLED
+        elif v == 'weighted':
+            self._c.mode.decay = lib.PUMAS_MODE_WEIGHTED
+        elif v == 'randomised':
+            self._c.mode.decay = lib.PUMAS_MODE_RANDOMISED
         else:
             raise ValueError(f"bad decay mode ('{v}')")
 
@@ -194,17 +194,17 @@ class Context:
 
     @property
     def scattering(self):
-        if self._c.mode.scattering == lib.PUMAS_MODE_LONGITUDINAL:
-            return 'longitudinal'
+        if self._c.mode.scattering == lib.PUMAS_MODE_DISABLED:
+            return 'disabled'
         else:
-            return 'fullspace'
+            return 'mixed'
 
     @scattering.setter
     def scattering(self, v):
-        if v == 'longitudinal':
-            self._c.mode.scattering = lib.PUMAS_MODE_LONGITUDINAL
-        elif v == 'fullspace':
-            self._c.mode.scattering = lib.PUMAS_MODE_FULL_SPACE
+        if v == 'disabled':
+            self._c.mode.scattering = lib.PUMAS_MODE_DISABLED
+        elif v == 'mixed':
+            self._c.mode.scattering = lib.PUMAS_MODE_MIXED
         else:
             raise ValueError(f"bad scattering mode ('{v}')")
 

@@ -32,20 +32,34 @@ try:
 except IndexError:
     setup = 'Al'
 
+try:
+    momentum = float(sys.argv[2])
+except IndexError:
+    momentum = None
+
 # Build the scattering target
 density = None
 if setup == 'Cu':
     # Akimenko et al. (1984)
-    material, thickness, momentum = 'Copper', 1.436E-02, 7.3
+    material, thickness = 'Copper', 1.436E-02
     edges = (0, 1E-03, 2E-03, 3E-03, 4E-03, 5E-03, 6E-03, 7E-03, 8E-03, 9E-03,
         13E-03, 17E-03, 21E-03, 25E-03, 29E-03, 7.)
+    if momentum is None:
+        momentum = 7.3
 else:
     # Attwood et al. (2006)
     edges = (0, 0.00269, 0.00895, 0.0162, 0.0248, 0.0347, 0.0463, 0.0597,
         0.0754, 0.0938, 0.1151, 7.)
-    momentum = 0.172
+    if momentum is None:
+        momentum = 0.172
 
-    if setup == 'Al':
+    if setup == 'Li':
+        material, thickness = 'Lithium', 6.415E-03
+    elif setup == 'Be':
+        material, thickness = 'Beryllium', 3.73E-03
+    elif setup == 'C':
+        material, thickness, density = 'CarbonAmorphous', 2.50E-03, 1.69E+03
+    elif setup == 'Al':
         material, thickness = 'Aluminum', 1.5E-03
     elif setup == 'Fe':
         material, thickness = 'Iron', 0.24E-03
