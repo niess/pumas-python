@@ -20,6 +20,7 @@ class Medium:
         self.material = material
         self.name = name
         self._media.append(weakref.ref(self))
+        Medium._last_physics = None
 
     @classmethod
     def _update(cls, physics):
